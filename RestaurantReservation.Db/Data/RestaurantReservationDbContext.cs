@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RestaurantReservation.Db.Models.Entities;
-
+using RestaurantReservation.Db.Seeding;
 namespace RestaurantReservation.Db.Data;
 
 public class RestaurantReservationDbContext : DbContext
@@ -9,7 +9,7 @@ public class RestaurantReservationDbContext : DbContext
     public RestaurantReservationDbContext(DbContextOptions<RestaurantReservationDbContext> options)
          : base(options) { }
 
-    // Parameterless constructor for design-time (optional, but can be useful)
+    
     public RestaurantReservationDbContext() { }
 
     public DbSet<Customer> Customers { get; set; }
@@ -23,10 +23,10 @@ public class RestaurantReservationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // Only configure if options are not already set (e.g., during design-time)
+       
         if (!optionsBuilder.IsConfigured)
         {
-            // Load configuration from AppSettings.json
+           
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../RestaurantReservation"))
                 .AddJsonFile("AppSettings.json", optional: false, reloadOnChange: true)
@@ -47,6 +47,7 @@ public class RestaurantReservationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(RestaurantReservationDbContext).Assembly);
+        RestaurantReservation.Db.Seeding.DataSeeding.Seed(modelBuilder);
     }
 
 }

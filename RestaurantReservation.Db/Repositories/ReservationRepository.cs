@@ -2,6 +2,7 @@
 using RestaurantReservation.Db.Data;
 using RestaurantReservation.Db.Interfaces;
 using RestaurantReservation.Db.Models.Entities;
+using RestaurantReservation.Db.Models.Views;
 using RestaurantReservation.Db.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,11 @@ namespace RestaurantReservation.Db.Repositories
             return await _context.Reservations.Include(r => r.Restaurant).Where(re => re.CustomerId == customerId).ToListAsync();
         }
 
-       
+        public async Task<IEnumerable<ReservationsDetails>> GetReservationsWithDetailsAsync()
+        {
+            return await _context.ReservationWithDetails.ToListAsync();
+        }
+
+
     }
 }

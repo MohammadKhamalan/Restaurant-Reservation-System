@@ -28,7 +28,6 @@ namespace RestaurantReservation
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IMenuItemRepository, MenuItemRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>(); 
             services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             services.AddScoped<ITableRepository, TableRepository>();

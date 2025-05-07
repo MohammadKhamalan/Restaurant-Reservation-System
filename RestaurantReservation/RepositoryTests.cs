@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using RestaurantReservation.Db.Data;
 using RestaurantReservation.Db.Interfaces;
 using RestaurantReservation.Db.Models.Entities;
 using RestaurantReservation.Db.Repositories;
@@ -33,6 +34,8 @@ namespace RestaurantReservation
             await TestReservationCrudOperations();
             await TestRestaurantCrudOperations();
             await TestTableCrudOperations();
+            await TestReservationWithDetailsAsync();
+            await TestEmployeesWithRestaurantsAsync();
         }
 
         private async Task ListManagers()
@@ -283,6 +286,46 @@ namespace RestaurantReservation
             var deleted = await restaurantRepo.GetByIdAsync(retrievedRestaurant!.RestaurantId);
             Console.WriteLine(deleted == null ? "Delete confirmed." : "Delete failed.");
         }
+
+        private async Task TestReservationWithDetailsAsync()
+        {
+            var reservationRepo = _serviceProvider.GetRequiredService<IReservationRepository>();
+            
+            var reservations = await reservationRepo.GetReservationsWithDetailsAsync();
+
+            if (reservations != null)
+            {
+                Console.WriteLine("\nReservations retrieved successfully!");
+                foreach (var reservation in reservations)
+                {
+                    Console.WriteLine($"Reservation ID: {reservation.ReservationId}, Date: {reservation.ReservationDate}, Party Size: {reservation.PartySize}, Customer: {reservation.CustomerFirstName} {reservation.CustomerLastName}, Restaurant: {reservation.RestaurantName}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No reservations found.");
+            }
+        }
+
+        private async Task TestEmployeesWithRestaurantsAsync()
+        {
+            var employeeRepo = _serviceProvider.GetRequiredService<IEmployeeRepository>();
+            var employees = await employeeRepo.GetEmployeesWithRestaurantsAsync();
+
+            if (employees != null)
+            {
+                Console.WriteLine("\nEmployees retrieved successfully!");
+                foreach (var employee in employees)
+                {
+                    Console.WriteLine($"EmployeeID: {employee.EmployeeId} ,EmployeeName: {employee.EmployeeFirstName} {employee.EmployeeLastName},EmployeePosition: {employee.EmployeePosition}, Restaurant: {employee.RestaurantName}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No employees found.");
+            }
+        }
+
     }
-    
+
 }

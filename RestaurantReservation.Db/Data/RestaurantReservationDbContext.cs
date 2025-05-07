@@ -51,6 +51,11 @@ public class RestaurantReservationDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(RestaurantReservationDbContext).Assembly);
         RestaurantReservation.Db.Seeding.DataSeeding.Seed(modelBuilder);
+        modelBuilder
+                .HasDbFunction(typeof(RestaurantReservationDbContext)
+                .GetMethod(nameof(fn_CalculateRestaurantRevenue), new[] { typeof(int) }))
+                .HasName("fn_CalculateRestaurantRevenue");
     }
-
+    public decimal fn_CalculateRestaurantRevenue(int restaurantId)
+            => throw new NotSupportedException("This method is for use with SQL translation only.");
 }

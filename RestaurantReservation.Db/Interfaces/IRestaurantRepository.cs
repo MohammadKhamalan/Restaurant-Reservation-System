@@ -10,5 +10,6 @@ namespace RestaurantReservation.Db.Interfaces
 {
     public interface IRestaurantRepository : IGenericRepository<Restaurant>
     {
+        public Task<decimal> fn_CalculateRestaurantRevenueAsync(int RestaurantId);
     }
 }

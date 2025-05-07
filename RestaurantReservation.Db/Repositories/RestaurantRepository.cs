@@ -1,4 +1,5 @@
-﻿using RestaurantReservation.Db.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Data;
 using RestaurantReservation.Db.Interfaces;
 using RestaurantReservation.Db.Models.Entities;
 using System;
@@ -17,6 +18,12 @@ namespace RestaurantReservation.Db.Repositories
         {
             _context = context;
         }
-       
+
+        public async Task<decimal> fn_CalculateRestaurantRevenueAsync(int RestaurantId)
+        {
+            var total = await _context.Restaurants.Where(res => res.RestaurantId == RestaurantId).Select(f => _context.fn_CalculateRestaurantRevenue(f.RestaurantId)).FirstOrDefaultAsync();
+
+            return total;
+        }
     }
 }

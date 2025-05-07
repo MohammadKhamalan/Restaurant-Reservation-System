@@ -36,6 +36,9 @@ namespace RestaurantReservation
             await TestTableCrudOperations();
             await TestReservationWithDetailsAsync();
             await TestEmployeesWithRestaurantsAsync();
+            await TestCalculateRestaurantRevenueAsync();
+
+
         }
 
         private async Task ListManagers()
@@ -325,7 +328,13 @@ namespace RestaurantReservation
                 Console.WriteLine("No employees found.");
             }
         }
-
+        private async Task TestCalculateRestaurantRevenueAsync()
+        {
+            var restaurantRepo = _serviceProvider.GetRequiredService<IRestaurantRepository>();
+            int RestaurantId = 1;
+            decimal TotalRevenue = await restaurantRepo.fn_CalculateRestaurantRevenueAsync(RestaurantId);
+            Console.WriteLine($"Revenue for Restaurant ID {RestaurantId}: {TotalRevenue}");
+        }
     }
 
 }

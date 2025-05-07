@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿
+using RestaurantReservation.Db.Models.Entities;
 using RestaurantReservation.Db.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantReservation.Db.Interfaces
 {
-    public interface IMenuItemRepository:IGenericRepository<MenuItem>
+    public interface IMenuItemRepository: IGenericRepository<MenuItem>
     {
         Task<List<MenuItem>> ListOrderedMenuItems(int ReservationId);
     }

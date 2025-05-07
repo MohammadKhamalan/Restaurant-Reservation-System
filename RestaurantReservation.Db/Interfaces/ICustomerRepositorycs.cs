@@ -10,6 +10,6 @@ namespace RestaurantReservation.Db.Interfaces
 {
     public interface ICustomerRepository : IGenericRepository<Customer>
     {
-        
+        Task<List<Customer>> GetCustomersWithReservationsAbovePartySizeAsync(int MinPartySize);
     }
 }

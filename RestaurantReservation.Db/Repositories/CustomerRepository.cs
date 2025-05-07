@@ -19,6 +19,12 @@ namespace RestaurantReservation.Db.Repositories
             _context = context;
         }
 
-
+        public async Task<List<Customer>> GetCustomersWithReservationsAbovePartySizeAsync(int MinPartySize)
+        {
+            var Customers = await _context.Customers
+                .FromSql($"EXEC sp_GetCustomersWithLargePartySize {MinPartySize}")
+                .ToListAsync();
+            return Customers;
+        }
     }
 }

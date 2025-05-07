@@ -37,6 +37,7 @@ namespace RestaurantReservation
             await TestReservationWithDetailsAsync();
             await TestEmployeesWithRestaurantsAsync();
             await TestCalculateRestaurantRevenueAsync();
+            await TestGetCustomersWithReservationsAbovePartySizeAsync();
 
 
         }
@@ -330,10 +331,29 @@ namespace RestaurantReservation
         }
         private async Task TestCalculateRestaurantRevenueAsync()
         {
-            var restaurantRepo = _serviceProvider.GetRequiredService<IRestaurantRepository>();
+            var RestaurantRepo = _serviceProvider.GetRequiredService<IRestaurantRepository>();
             int RestaurantId = 1;
-            decimal TotalRevenue = await restaurantRepo.fn_CalculateRestaurantRevenueAsync(RestaurantId);
+            decimal TotalRevenue = await RestaurantRepo.fn_CalculateRestaurantRevenueAsync(RestaurantId);
             Console.WriteLine($"Revenue for Restaurant ID {RestaurantId}: {TotalRevenue}");
+        }
+        private async Task TestGetCustomersWithReservationsAbovePartySizeAsync()
+        {
+            var CustomerRepo = _serviceProvider.GetRequiredService<ICustomerRepository>();
+            int PartySize = 3;
+            var CustomersWithLargeReservations = await CustomerRepo.GetCustomersWithReservationsAbovePartySizeAsync(PartySize);
+            if (CustomersWithLargeReservations.Count > 0)
+            {
+                Console.WriteLine($"\nCustomers with reservations larger than {PartySize} party size:");
+                foreach (var customer in CustomersWithLargeReservations)
+                {
+                    Console.WriteLine($"{customer.FirstName} {customer.LastName}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"No customers found with reservations larger than {PartySize}.");
+            }
+
         }
     }
 

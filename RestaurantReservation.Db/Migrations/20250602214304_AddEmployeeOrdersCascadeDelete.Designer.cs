@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantReservation.Db.Data;
 
@@ -11,9 +12,11 @@ using RestaurantReservation.Db.Data;
 namespace RestaurantReservation.Db.Migrations
 {
     [DbContext(typeof(RestaurantReservationDbContext))]
-    partial class RestaurantReservationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250602214304_AddEmployeeOrdersCascadeDelete")]
+    partial class AddEmployeeOrdersCascadeDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -677,7 +680,6 @@ namespace RestaurantReservation.Db.Migrations
                     b.HasOne("RestaurantReservation.Db.Models.Entities.Restaurant", "Restaurant")
                         .WithMany("Employees")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Restaurant");
@@ -704,7 +706,7 @@ namespace RestaurantReservation.Db.Migrations
                     b.HasOne("RestaurantReservation.Db.Models.Entities.Reservation", "Reservation")
                         .WithMany("Orders")
                         .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -722,7 +724,6 @@ namespace RestaurantReservation.Db.Migrations
                     b.HasOne("RestaurantReservation.Db.Models.Entities.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("MenuItem");

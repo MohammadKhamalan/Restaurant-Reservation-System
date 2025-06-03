@@ -30,7 +30,7 @@ namespace RestaurantReservation.Db.Configurations
             builder.HasOne(o => o.Employee)
              .WithMany(e => e.Orders)
              .HasForeignKey(o => o.EmployeeId)
-             .OnDelete(DeleteBehavior.ClientSetNull);
+             .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(o => o.OrderItems)
               .WithOne(oi => oi.Order)

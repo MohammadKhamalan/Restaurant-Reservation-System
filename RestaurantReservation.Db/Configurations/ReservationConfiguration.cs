@@ -38,7 +38,7 @@ namespace RestaurantReservation.Db.Configurations
             builder.HasMany(r => r.Orders)
                    .WithOne(o => o.Reservation)
                    .HasForeignKey(o => o.ReservationId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
 
         }
         }

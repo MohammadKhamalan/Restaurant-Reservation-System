@@ -1,0 +1,14 @@
+# .NET Build Outputs
+bin/
+obj/
+
+# Visual Studio Files
+.vs/
+
+# Environment Files (Sensitive Data)
+*.env
+
+# IDE-Specific Files
+.idea/
+*.user
+*.suo
